@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchUsers } from '../actions';
+import { fetchUsers } from '../actions/index';
 
 class UsersList extends Component {
   componentDidMount() {
@@ -25,6 +25,9 @@ class UsersList extends Component {
 
 const mapStateToProps = ({ users }) => ({ users });
 
-export const loadData = store => store.dispatch(fetchUsers());
+const loadData = store => store.dispatch(fetchUsers());
 
-export default connect(mapStateToProps, { fetchUsers })(UsersList);
+export default {
+  component: connect(mapStateToProps, {fetchUsers})(UsersList),
+  loadData
+};
