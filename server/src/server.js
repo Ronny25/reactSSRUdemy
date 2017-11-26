@@ -11,7 +11,7 @@ const app = express();
 
 app.use(
   '/api',
-  proxy('http://react-ssr-api-herokuapp.com', {
+  proxy('http://react-ssr-api.herokuapp.com', {
     proxyReqOptDecorator(opts) {
       opts.headers['x-forwarded-host'] = 'localhost:3000';
       return opts;
@@ -20,7 +20,7 @@ app.use(
 );
 app.use(express.static('public'));
 app.get('*', (req, res) => {
-  const store = createStore();
+  const store = createStore(req);
 
   const promises = matchRoutes(Routes, req.path).map(
     ({ route }) => route.loadData ? route.loadData(store) : null
